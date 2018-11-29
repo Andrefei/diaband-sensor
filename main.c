@@ -1363,7 +1363,8 @@ int WaitDeviceArrival(int mode, unsigned char* msgToSend, unsigned int len)
         //--------
         printf("LENGTH: %d\n", NDEFinfo.current_ndef_length);
         printf("IS NDEF: %d\n", NDEFinfo.is_ndef);
-        printf("HANDLE: %d\n", TagInfo.handle);
+        printf("HANDLE: %d\n", TagInfo);
+        PrintNDEFContent(&TagInfo, &NDEFinfo, NULL, 0x00);
         exit(0);
         //--------
 				res = nfcTag_isNdef(TagInfo.handle, &NDEFinfo);
