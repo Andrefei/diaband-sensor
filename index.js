@@ -28,7 +28,7 @@ let sum = addon.sum(nrOne, nrTwo);
 io.on("connection", socket => {
   console.log("New client connected"), setInterval(
     () => emitData(socket),
-    10000
+    500
   );
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
