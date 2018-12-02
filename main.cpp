@@ -93,12 +93,14 @@ int main(int argc, char ** argv) {
 
             case TARGET_TYPE_ISO15693:
             {
+		/*
 		res = nfcTag_isFormatable(g_tagInfos.handle);
 		if (res == 1) { printf("Formatable\n"); }
 		else { printf("Not Formatable\n"); }
 		printf("res Return: %i\n", res);
 		res = nfcTag_formatTag(g_tagInfos.handle);
 		printf("res formatTag: %i\n", res);
+		*/
 		//unsigned char ReadCmd[] = {};
                 unsigned char ReadCmd[] = {0x02U, 0x20, /*block*/ 0x04};
                 //unsigned char WriteCmd[] = {0x02U, 0x21, /*block*/ 0x04, 0x11, 0x22, 0x33, 0x44};
@@ -130,6 +132,7 @@ int main(int argc, char ** argv) {
 //
 NAN_METHOD(Sum)
 {
+	main(0, NULL);
 	//
 	//	1.	Save the buffers that I passed from NodeJS in to local variables
 	//
