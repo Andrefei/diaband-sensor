@@ -39,6 +39,23 @@ int main(int argc, char ** argv) {
 //
 NAN_METHOD(Sum)
 {
+	pthread_cond_t condition = PTHREAD_COND_INITIALIZER;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+
+	nfcTagCallback_t g_TagCB;
+	nfc_tag_info_t g_tagInfos;
+
+	void onTagArrival(nfc_tag_info_t *pTagInfo){
+	    printf("Tag detected\n");
+	    g_tagInfos = *pTagInfo;
+	    pthread_cond_signal(&condition);
+	}
+
+	void onTagDeparture(void){
+	    printf("Tag removed\n-------------\n");
+	    printf("\n-------------\nWaiting for tag...\n");
+	}
+
 	int res = 0x00;
 	int i;
 
