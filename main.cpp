@@ -14,7 +14,7 @@ using namespace Nan;
 using namespace v8;
 
 pthread_cond_t condition = PTHREAD_COND_INITIALIZER;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t my_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 nfcTagCallback_t g_TagCB;
 nfc_tag_info_t g_tagInfos;
@@ -30,48 +30,32 @@ void onTagDeparture(void){
     printf("\n-------------\nWaiting for tag...\n");
 }
 
-int main(int argc, char ** argv) {
+//int main(int argc, char ** argv) {
 
-}
+//}
 
 //
 //	The function that we are going to call from NodeJS
 //
 NAN_METHOD(Sum)
 {
-	pthread_cond_t condition = PTHREAD_COND_INITIALIZER;
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
-	nfcTagCallback_t g_TagCB;
-	nfc_tag_info_t g_tagInfos;
-
-	void onTagArrival(nfc_tag_info_t *pTagInfo){
-	    printf("Tag detected\n");
-	    g_tagInfos = *pTagInfo;
-	    pthread_cond_signal(&condition);
-	}
-
-	void onTagDeparture(void){
-	    printf("Tag removed\n-------------\n");
-	    printf("\n-------------\nWaiting for tag...\n");
-	}
-
-	int res = 0x00;
-	int i;
-
+	//int res = 0x00;
+	//int i;
+	/*
 	g_TagCB.onTagArrival = onTagArrival;
 	g_TagCB.onTagDeparture = onTagDeparture;
+	printf("Hello World");
 	nfcManager_doInitialize();
 	nfcManager_registerTagCallback(&g_TagCB);
 	nfcManager_enableDiscovery(DEFAULT_NFA_TECH_MASK, 0x01, 0, 0);
 
 	printf("\n-------------\nWaiting for tag...\n");
 	do{
-			pthread_cond_wait(&condition, &mutex);
+			pthread_cond_wait(&condition, &my_mutex);
 
 			/* Raw access to tag */
 			printf("Tag read and the tech is: ");
-			printf(" %s\n", g_tagInfos.technology);
+			printf(" %d\n", g_tagInfos.technology);
 			/*
 			switch (g_tagInfos.technology)
 			{
@@ -142,8 +126,8 @@ NAN_METHOD(Sum)
 					} break;
 			}
 			*/
-	}while(1);
-	nfcManager_doDeinitialize();
+	//}while(1);
+	//nfcManager_doDeinitialize();
 	//
 	//	1.	Save the buffers that passed from NodeJS in to local variables
 	//

@@ -23,18 +23,24 @@ let nrTwo = new Buffer("40000");
 //	Call the C++ function with our numbers, and store the result in a new
 //	variable
 let sum = addon.sum(nrOne, nrTwo);
+const results = {
+  data: {
+    series: [[87, 91, 114, 125, 100, 140, 55, 100, 110, 98, 140, 150, 100, 110, 98, 140, 150, 160, 90, 87, 91, 114, 125, 100, 140, 150, 100, 110, 230, 90, 150, 160, 200]],
+    replacement: 6
+  }
+}
 
 //Sends data to client on connection
 io.on("connection", socket => {
   console.log("New client connected"), setInterval(
     () => emitData(socket),
-    500
+    1000
   );
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
 const emitData = async socket => {
   try {
-    socket.emit("FromAPI", sum);
+    socket.emit("FromAPI", results);
   } catch (error) {
     console.error(`Error: ${error.code}`);
   }
