@@ -13,22 +13,24 @@ using namespace v8;
 NAN_METHOD(Sum)
 {
 	// run a process and create a streambuf that reads its stdout and stderr
-	printf("Start of Cpp");
+	//printf("Start of Cpp\n");
 	string cmd = "./tag-raw_example";
 	 string data;
 	 FILE * stream;
 	 const int max_buffer = 256;
 	 char buffer[max_buffer];
 	 cmd.append(" 2>&1");
-	 printf("Open stream");
+	 printf("Open stream \n");
 	 stream = popen(cmd.c_str(), "r");
 	 if (stream) {
+	 printf("if strem ==  true \n");
 		 while (!feof(stream))
+			 //printf("Hello from loop \n");
 			 if (fgets(buffer, max_buffer, stream) != NULL) data.append(buffer);
 			 pclose(stream);
 	 }
-	 printf("close stream");
-	 printf("%s\n", data);
+	 printf("close stream \n");
+	 printf("DATA!: %s\n", data.c_str());
 	//
 	//	1.	Save the buffers that I passed from NodeJS in to local variables
 	//
