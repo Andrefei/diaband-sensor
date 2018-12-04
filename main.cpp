@@ -1,5 +1,7 @@
 #include <nan.h>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
 using namespace std;
 using namespace Nan;
@@ -11,15 +13,22 @@ using namespace v8;
 NAN_METHOD(Sum)
 {
 	// run a process and create a streambuf that reads its stdout and stderr
- redi::ipstream proc("./tag-raw_example", redi::pstreams::pstdout | redi::pstreams::pstderr);
- std::string line;
- // read child's stdout
- while (std::getline(proc.out(), line))
-	 std::cout << "stdout: " << line << '\n';
- // read child's stderr
- while (std::getline(proc.err(), line))
-	 std::cout << "stderr: " << line << '\n';
-	 printf("%s\n", line);
+	printf("Start of Cpp");
+	string cmd = "./tag-raw_example";
+	 string data;
+	 FILE * stream;
+	 const int max_buffer = 256;
+	 char buffer[max_buffer];
+	 cmd.append(" 2>&1");
+	 printf("Open stream");
+	 stream = popen(cmd.c_str(), "r");
+	 if (stream) {
+		 while (!feof(stream))
+			 if (fgets(buffer, max_buffer, stream) != NULL) data.append(buffer);
+			 pclose(stream);
+	 }
+	 printf("close stream");
+	 printf("%s\n", data);
 	//
 	//	1.	Save the buffers that I passed from NodeJS in to local variables
 	//
