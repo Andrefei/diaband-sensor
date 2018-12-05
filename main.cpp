@@ -2,7 +2,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <time.h>
 using namespace std;
 using namespace Nan;
 using namespace v8;
@@ -14,6 +14,8 @@ NAN_METHOD(Sum)
 {
 	// run a process and create a streambuf that reads its stdout and stderr
 	//printf("Start of Cpp\n");
+	time_t start_time, end_time;
+	time(&start_time);
 	string cmd = "./tag-raw_example";
 	 string data;
 	 FILE * stream;
@@ -24,10 +26,12 @@ NAN_METHOD(Sum)
 	 stream = popen(cmd.c_str(), "r");
 	 if (stream) {
 	 printf("if strem ==  true \n");
-		 while (!feof(stream))
+		 while (!feof(stream)) {
 			 //printf("Hello from loop \n");
 			 if (fgets(buffer, max_buffer, stream) != NULL) data.append(buffer);
 			 pclose(stream);
+			 
+		 }
 	 }
 	 printf("close stream \n");
 	 printf("DATA!: %s\n", data.c_str());
