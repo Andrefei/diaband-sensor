@@ -124,6 +124,7 @@ int main(int argc, char ** argv) {
                 printf("Unsupported tag type\n");
             } break;
         }
-    }while(1);
+    }while(0);
     nfcManager_doDeinitialize();
+    return 0;
 }
