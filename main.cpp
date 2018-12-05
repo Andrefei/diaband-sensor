@@ -15,26 +15,30 @@ NAN_METHOD(Sum)
 	// run a process and create a streambuf that reads its stdout and stderr
 	//printf("Start of Cpp\n");
 	time_t start_time, end_time;
-	time(&start_time);
+	double dif;
+	double timeout = 3.0;
+	time(&start_time);	// Set start_time to be current time in seconds
 	string cmd = "./tag-raw_example";
-	 string data;
-	 FILE * stream;
-	 const int max_buffer = 256;
-	 char buffer[max_buffer];
-	 cmd.append(" 2>&1");
-	 printf("Open stream \n");
-	 stream = popen(cmd.c_str(), "r");
-	 if (stream) {
-	 printf("if strem ==  true \n");
-		 while (!feof(stream)) {
-			 //printf("Hello from loop \n");
-			 if (fgets(buffer, max_buffer, stream) != NULL) data.append(buffer);
-			 pclose(stream);
-			 
-		 }
-	 }
-	 printf("close stream \n");
-	 printf("DATA!: %s\n", data.c_str());
+	string data;
+	FILE * stream;
+	const int max_buffer = 256;
+	char buffer[max_buffer];
+	cmd.append(" 2>&1");
+	printf("Open stream \n");
+	stream = popen(cmd.c_str(), "r");
+	if (stream) {
+		printf("if strem ==  true \n");
+		while (!feof(stream)) {
+			//printf("Hello from loop \n");
+			if (fgets(buffer, max_buffer, stream) != NULL) data.append(buffer);
+			pclose(stream);
+			time(&end_time);	// Set end_time to current time in seconds
+			dif = difftime(end_time, start_time);	// calculate time elapsed
+			if (dif >= timeout) break;
+		}
+	}
+	printf("close stream \n");
+	printf("DATA!: %s\n", data.c_str());
 	//
 	//	1.	Save the buffers that I passed from NodeJS in to local variables
 	//
