@@ -1,6 +1,5 @@
 //Send sensor data to React server
 //by using the socket.io engine
-
 'use strict';
 const express = require("express");
 const http = require("http");
@@ -22,7 +21,8 @@ let nrTwo = new Buffer("40000");
 
 //	Call the C++ function with our numbers, and store the result in a new
 //	variable
-let sum = addon.sum(nrOne, nrTwo);
+let sum = addon.readData(nrOne, nrTwo);
+console.log("Cpp returns: " + sum);
 
 //Sends data to client on connection
 io.on("connection", socket => {
