@@ -19,22 +19,33 @@ const io = socketIo(server);
 let nrOne = new Buffer("1");
 let nrTwo = new Buffer("40000");
 
-//	Call the C++ function with our numbers, and store the result in a new
-//	variable
-let sum = addon.readData(nrOne, nrTwo);
-console.log("Cpp returns: " + sum);
+//Call the C++ function and store the result in a new variable
+function getNfcData() {
+  //let nfc_res = addon.readData(nrOne, nrTwo);
+  //Parse the C++ data from HEX string to list of integers
+  let nfc_test = "00 2D 5E E1 70 10 79 2C 86";
+  var hex_array = nfc_test.split(" ");
+  hex_array.forEach(function(entry) {
+    console.log("String: " + entry + " parseInt: " + parseInt(entry, 16));
+    //string to hex
+    //then hex to int :^)
+  });
+
+  return nfc_parsed;
+}
 
 //Sends data to client on connection
 io.on("connection", socket => {
   console.log("New client connected"), setInterval(
     () => emitData(socket),
-    500
+    1000
   );
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
+//Determines which data is sent
 const emitData = async socket => {
   try {
-    socket.emit("FromAPI", sum);
+    socket.emit("FromAPI", getNfcData());
   } catch (error) {
     console.error(`Error: ${error.code}`);
   }
