@@ -21,16 +21,21 @@ let nrTwo = new Buffer("40000");
 
 //Call the C++ function and store the result in a new variable
 function getNfcData() {
-  //let nfc_res = addon.readData(nrOne, nrTwo);
-  //Parse the C++ data from HEX string to list of integers
-  let nfc_test = "00 2D 5E E1 70 10 79 2C 86";
-  var hex_array = nfc_test.split(" ");
+  let nfc_string = addon.readData(nrOne, nrTwo);
+  //TODO Check if string is emtpy
+  var hex_array = nfc_string.split(" ");
+  hex_array.shift();
+  var nfc_parsed = [];
+  //Fabricate sensor data
   hex_array.forEach(function(entry) {
-    console.log("String: " + entry + " parseInt: " + parseInt(entry, 16));
-    //string to hex
-    //then hex to int :^)
+    nfc_parsed.push(parseInt(entry, 16));
+    nfc_parsed.unshift(parseInt(entry, 16));
   });
-
+  hex_array.forEach(function(entry) {
+    nfc_parsed.push(parseInt(entry, 16));
+    nfc_parsed.unshift(parseInt(entry, 16));
+  });
+  //--------
   return nfc_parsed;
 }
 
@@ -42,7 +47,6 @@ io.on("connection", socket => {
   );
   socket.on("disconnect", () => console.log("Client disconnected"));
 });
-//Determines which data is sent
 const emitData = async socket => {
   try {
     socket.emit("FromAPI", getNfcData());
