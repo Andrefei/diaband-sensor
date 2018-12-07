@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <cstring>
+#include <string>
+
 using namespace std;
 using namespace Nan;
 using namespace v8;
@@ -39,24 +42,14 @@ NAN_METHOD(Sum)
 	}
 	printf("close stream \n");
 	printf("DATA!: %s\n", data.c_str());
-	//
-	//	1.	Save the buffers that I passed from NodeJS in to local variables
-	//
-	unsigned int nrOne = info[0]->Uint32Value();
-	unsigned int nrDwo = info[1]->Uint32Value();
 
-	//
-	//	2.	Sum the two numbers together
-	//
-	uint32_t sum = nrOne + nrDwo;
-
-	//
-	//	->	Send the buffer back to NodeJS with the result of our calculation.
-	//
+	 //Copy data to str as a C-String
+	 uint8_t length = data.size();
+	 char* str =  new char [length + 1];
+	 std::strcpy (str, data.c_str());
 	info
 	.GetReturnValue()
-	.Set(
-		Nan::New<Uint32>(sum));
+	.Set(NewBuffer(str, length).ToLocalChecked());
 }
 
 //
@@ -69,7 +62,7 @@ NAN_MODULE_INIT(Init)
 	//
 	Nan::Set(
 		target,
-		New<String>("sum").ToLocalChecked(),
+		New<String>("readData").ToLocalChecked(),
 		GetFunction(New<FunctionTemplate>(Sum)).ToLocalChecked()
 	);
 }
