@@ -31,15 +31,9 @@ NAN_METHOD(Sum)
 	stream = popen(cmd.c_str(), "r");
 	if (stream) {
 		printf("if strem ==  true \n");
-		while (!feof(stream)) //{
-			//printf("Hello from loop \n");
+		while (!feof(stream))
 			if (fgets(buffer, max_buffer, stream) != NULL) data.append(buffer);
-			//printf("Hello from after access\n");
 			pclose(stream);
-			//time(&end_time);	// Set end_time to current time in seconds
-			//dif = difftime(end_time, start_time);	// calculate time elapsed
-			//if (dif >= timeout) break;
-		//}
 	}
 	printf("close stream \n");
 	printf("DATA!: %s\n", data.c_str());
