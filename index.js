@@ -21,7 +21,7 @@ let nrTwo = new Buffer("40000");
 
 //Call the C++ function and store the result in a new variable
 function getNfcData() {
-  let nfc_string = addon.readData(nrOne, nrTwo);
+  let nfc_string = "" + addon.readData(nrOne, nrTwo);
   //TODO Check if string is emtpy
   var hex_array = nfc_string.split(" ");
   hex_array.shift();
