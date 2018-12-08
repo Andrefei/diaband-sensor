@@ -38,7 +38,7 @@ int main(int argc, char ** argv) {
   //pthread_mutex_t mutex;
   time_t T;
   struct timespec t;
-
+  /*
   if (pthread_mutex_init(&mutex, NULL) != 0) {
     perror("pthread_mutex_init() error");
     exit(1);
@@ -53,10 +53,12 @@ int main(int argc, char ** argv) {
     perror("pthread_mutex_lock() error");
     exit(3);
   }
-
+ */
   time(&T);
   t.tv_sec = T + 2;
   printf("starting timedwait at %s", ctime(&T));
+  pthread_cond_timedwait(&condition, &mutex, &t);
+  /*
   if (pthread_cond_timedwait(&condition, &mutex, &t) != 0)
     if (errno == EAGAIN)
       puts("wait timed out");
@@ -64,7 +66,7 @@ int main(int argc, char ** argv) {
       perror("pthread_cond_timedwait() error");
       exit(4);
     }
-
+  */
   time(&T);
   printf("timedwait over at %s", ctime(&T));
 
