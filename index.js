@@ -20,14 +20,18 @@ let nrOne = new Buffer("1");
 let nrTwo = new Buffer("40000");
 
 //Call the C++ function and store the result in a new variable
+var nfc_parsed = [];
 function getNfcData() {
   let nfc_string = "" + addon.readData(nrOne, nrTwo);
   if (nfc_string === "") {
-    return "yolo2.0"
+    if (nfc_parsed == []) {
+      return [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    }
+    return nfc_parsed;
   }
   var hex_array = nfc_string.split(" ");
   hex_array.shift();
-  var nfc_parsed = [];
+  nfc_parsed = [];
   //Fabricate sensor data
   hex_array.forEach(function(entry) {
     nfc_parsed.push(parseInt(entry, 16));
