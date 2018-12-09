@@ -30,13 +30,12 @@ NAN_METHOD(Sum)
 	printf("Open stream \n");
 	stream = popen(cmd.c_str(), "r");
 	if (stream) {
-		printf("if strem ==  true \n");
-		while (!feof(stream))
-			if (fgets(buffer, max_buffer, stream) != NULL) data.append(buffer);
-			pclose(stream);
+		//while (!feof(stream))
+		if (fgets(buffer, max_buffer, stream) != NULL) data.append(buffer);
+		pclose(stream);
 	}
 	printf("close stream \n");
-	printf("DATA!: %s\n", data.c_str());
+	printf("RAW DATA: %s\n", data.c_str());
 
 	 //Copy data to str as a C-String
 	 uint8_t length = data.size();
