@@ -20,13 +20,10 @@ let nrOne = new Buffer("1");
 let nrTwo = new Buffer("40000");
 
 //Call the C++ function and store the result in a new variable
-var nfc_parsed = [];
+var nfc_parsed = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 function getNfcData() {
   let nfc_string = "" + addon.readData(nrOne, nrTwo);
   if (nfc_string === "") {
-    if (nfc_parsed == []) {
-      return [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-    }
     return nfc_parsed;
   }
   var hex_array = nfc_string.split(" ");
